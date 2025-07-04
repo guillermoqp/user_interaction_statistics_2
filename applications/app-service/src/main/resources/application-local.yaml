@@ -1,0 +1,30 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  application:
+    name: user-interaction-statistics
+  main:
+    web-application-type: reactive
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+app:
+  events:
+    exchange: amq.direct
+    routing-key: event.stats.validated
+  dynamodb:
+    endpoint: http://localhost:8000
+    region: us-east-1
+
+logging:
+  level:
+    root: INFO
+    co.com.bancolombia: DEBUG
+
+server:
+  port: 8080
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"

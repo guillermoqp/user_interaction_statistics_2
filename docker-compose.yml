@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+
+  dynamodb-local:
+    image: amazon/dynamodb-local
+    container_name: dynamodb_local
+    ports:
+      - "8000:8000"
+    command: "-jar DynamoDBLocal.jar -inMemory -sharedDb"
+    networks:
+      - stats-net
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_stats
+    ports:
+      - "5672:5672"   # para AMQP
+      - "15672:15672" # para UI web de administración
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - stats-net
+
+networks:
+  stats-net:
+    driver: bridge
