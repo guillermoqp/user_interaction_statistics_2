@@ -1,7 +1,4 @@
 spring:
-  config:
-    activate:
-      on-profile: local
   application:
     name: user-interaction-statistics
   main:
@@ -13,8 +10,8 @@ spring:
     password: guest
   devtools:
     add-properties: true
-  profiles:
-    include: local
+  webflux:
+    base-path: /api/v1/user-interaction-statistics
 app:
   events:
     exchange: amq.direct
