@@ -27,6 +27,6 @@ public class DynamoAdapter implements StatsRepository {
                 .hash(stats.getHash())
                 .build();
 
-        return repository.save(entity).thenReturn(stats);
+        return repository.save(stats).thenReturn(stats);
     }
 }

@@ -11,14 +11,15 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import co.com.bancolombia.events.config.EventProperties;
 import co.com.bancolombia.dynamodb.config.DynamoDbProperties;
 
-/*@ComponentScan(basePackages = "co.com.bancolombia.usecase",
+@ComponentScan(basePackages = "co.com.bancolombia.usecase",
         includeFilters = {
                 @ComponentScan.Filter(type = FilterType.REGEX, pattern = "^.+UseCase$")
         },
-        useDefaultFilters = false)*/
+        useDefaultFilters = false)
 @Configuration
 @EnableConfigurationProperties({ EventProperties.class, DynamoDbProperties.class })
 public class UseCasesConfig {
+
     @Bean
     public StatsUseCase statsUseCase(StatsRepository repository, EventPublisher publisher) {
         return new StatsUseCase(repository, publisher);

@@ -11,6 +11,10 @@ spring:
     port: 5672
     username: guest
     password: guest
+  devtools:
+    add-properties: true
+  profiles:
+    include: local
 app:
   events:
     exchange: amq.direct
@@ -18,12 +22,13 @@ app:
   dynamodb:
     endpoint: http://localhost:8000
     region: us-east-1
-
+    access-key: fakeMyKeyId
+    secret-key: fakeSecretAccessKey
+    table-name: stats-table
 logging:
   level:
     root: INFO
     co.com.bancolombia: DEBUG
-
 server:
   port: 8080
 cors:

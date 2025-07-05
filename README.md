@@ -31,22 +31,22 @@ Microservicio que recibe estadísticas de interacción con usuarios, valida un h
 ## ⚙️ Cómo ejecutar el servicio
 1. Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/user-interaction-statistics.git
+git clone https://github.com/guillermoqp/user_interaction_statistics_2.git
 cd user-interaction-statistics
 ```
 2. Levantar servicios necesarios (DynamoDB + RabbitMQ)
 ```bash
 docker-compose up -d
 ```
-DynamoDB: http://localhost:8000
-RabbitMQ UI: http://localhost:15672 (user: guest, pass: guest)
+#### DynamoDB: http://localhost:8000
+#### RabbitMQ UI: http://localhost:15672 (user: guest, pass: guest)
 3. Ejecutar el microservicio
 ```bash
 ./gradlew bootRun
 ```
 El servicio quedará disponible en:
 📍 http://localhost:8080/stats
-📮 Cómo probar el endpoint
+## 📮 Cómo probar el endpoint
 Request válido:
 ```bash
 curl -X POST http://localhost:8080/stats \
@@ -94,8 +94,7 @@ Generar y ver cobertura (Jacoco)
 Abre el reporte:
 ```bash
 build/reports/jacoco/test/html/index.html
-```
-### ✅ El proyecto debe tener al menos 80% de cobertura.
+``` 
 ## 📬 Contacto
 * Autor: [jgquinta-Jose Guillermo Quintanilla Paredes]
 * Correo: [jgquinta@bancolombia.com.co]

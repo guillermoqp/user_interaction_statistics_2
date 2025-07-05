@@ -8,4 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class DynamoDbProperties {
     private String endpoint;
     private String region;
+    private String tableName;
+    private String accessKey;
+    private String secretKey;
 }
