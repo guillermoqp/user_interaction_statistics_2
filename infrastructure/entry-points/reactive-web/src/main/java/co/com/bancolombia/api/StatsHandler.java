@@ -23,10 +23,10 @@ public class StatsHandler {
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(validStats))
                 .onErrorResume(e -> {
-                    log.error("Error procesando estadística: {}", e.getMessage());
+                    log.error("Error procesando estadistica: {}", e.getMessage());
                     return ServerResponse.badRequest()
                             .contentType(MediaType.APPLICATION_JSON)
-                            .bodyValue("{\"error\":\"Hash inválido\"}");
+                            .bodyValue("{\"error\":\"Hash invalido\"}");
                 });
     }
 }

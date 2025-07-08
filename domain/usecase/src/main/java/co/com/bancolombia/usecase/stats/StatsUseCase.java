@@ -3,14 +3,13 @@ package co.com.bancolombia.usecase.stats;
 import co.com.bancolombia.model.stats.Stats;
 import co.com.bancolombia.model.stats.gateways.EventPublisher;
 import co.com.bancolombia.model.stats.gateways.StatsRepository;
+import java.math.BigInteger;
 import lombok.RequiredArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 
-//@Slf4j
 @RequiredArgsConstructor
 public class StatsUseCase {
 
@@ -27,13 +26,12 @@ public class StatsUseCase {
                             stats.getMotivoCompra(),
                             stats.getMotivoFelicitaciones(),
                             stats.getMotivoCambio());
-
                     String calculatedHash = md5(input);
-                    if (!calculatedHash.equalsIgnoreCase(stats.getHash())) {
-                        throw new IllegalArgumentException("Hash inválido");
+                    if (calculatedHash.equals(stats.getHash())) {
+                        return stats.withTimestamp(Instant.now().toEpochMilli());
+                    } else {
+                        throw new IllegalArgumentException("Hash invalido");
                     }
-
-                    return stats.withTimestamp(Instant.now().toEpochMilli());
                 })
                 .flatMap(validStats ->
                         statsRepository.saveStats(validStats)
@@ -42,15 +40,17 @@ public class StatsUseCase {
                 );
     }
 
-    private String md5(String input) {
+    private static String md5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] digest = md.digest(input.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte b : digest) {
-                sb.append(String.format("%02x", b & 0xff));
+            md.update(input.getBytes());
+            byte[] digest = md.digest();
+            BigInteger no = new BigInteger(1, digest);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
             }
-            return sb.toString();
+            return hashtext;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Error al generar hash MD5", e);
         }

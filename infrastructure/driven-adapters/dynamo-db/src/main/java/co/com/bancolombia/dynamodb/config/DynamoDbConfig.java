@@ -1,7 +1,7 @@
 package co.com.bancolombia.dynamodb.config;
 
 import co.com.bancolombia.dynamodb.config.DynamoDbProperties;
-import co.com.bancolombia.model.stats.Stats;
+import co.com.bancolombia.dynamodb.entity.StatsEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
@@ -33,8 +33,8 @@ public class DynamoDbConfig {
     }
 
     @Bean
-    public DynamoDbAsyncTable<Stats> statsTable(DynamoDbEnhancedAsyncClient enhancedAsyncClient,
+    public DynamoDbAsyncTable<StatsEntity> statsTable(DynamoDbEnhancedAsyncClient enhancedAsyncClient,
                                                 DynamoDbProperties properties) {
-        return enhancedAsyncClient.table(properties.getTableName(), TableSchema.fromBean(Stats.class));
+        return enhancedAsyncClient.table(properties.getTableName(), TableSchema.fromBean(StatsEntity.class));
     }
 }

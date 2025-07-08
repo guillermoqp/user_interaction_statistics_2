@@ -1,7 +1,6 @@
 package co.com.bancolombia.dynamodb;
 
 import co.com.bancolombia.dynamodb.entity.StatsEntity;
-import co.com.bancolombia.dynamodb.entity.StatsEntity;
 import co.com.bancolombia.dynamodb.repository.StatsDynamoRepository;
 import co.com.bancolombia.model.stats.Stats;
 import co.com.bancolombia.model.stats.gateways.StatsRepository;
@@ -26,7 +25,6 @@ public class DynamoAdapter implements StatsRepository {
                 .motivoCambio(stats.getMotivoCambio())
                 .hash(stats.getHash())
                 .build();
-
-        return repository.save(stats).thenReturn(stats);
+        return repository.save(entity).thenReturn(stats);
     }
 }

@@ -9,7 +9,7 @@ Microservicio que recibe estadísticas de interacción con usuarios, valida un h
 - Spring Boot 3 + WebFlux
 - Clean Architecture (Scaffold Bancolombia v3.23.1)
 - DynamoDB Local
-- RabbitMQ
+- RabbitMQ Local
 - Docker Compose
 - Reactor + Mono/Flux
 - Lombok
@@ -38,18 +38,20 @@ cd user-interaction-statistics
 ```bash
 docker-compose up -d
 ```
-#### DynamoDB: http://localhost:8000
-#### RabbitMQ UI: http://localhost:15672 (user: guest, pass: guest)
+#### DynamoDB: http://localhost:8010
+#### RabbitMQ UI: http://localhost:15672/#/queues (user: guest, pass: guest)
+##### Se debe crear la tabla DynamoDB: stats-table
+##### Se debe crear la RabbitMQ Queue: routing-key: event.stats.validated
 3. Ejecutar el microservicio
 ```bash
 ./gradlew bootRun
 ```
 El servicio quedará disponible en:
-📍 http://localhost:8080/stats
+📍 http://localhost:8080/api/v1/user-interaction-statistics/stats
 ## 📮 Cómo probar el endpoint
 Request válido:
 ```bash
-curl -X POST http://localhost:8080/stats \
+curl -X POST http://localhost:8080/api/v1/user-interaction-statistics/stats \
 -H "Content-Type: application/json" \
 -d '{
 "totalContactoClientes":250,
@@ -96,6 +98,6 @@ Abre el reporte:
 build/reports/jacoco/test/html/index.html
 ``` 
 ## 📬 Contacto
-* Autor: [jgquinta-Jose Guillermo Quintanilla Paredes]
-* Correo: [jgquinta@bancolombia.com.co]
-* GitHub: [https://github.com/guillermoqp]
+* Autor: [jgquinta-José Guillermo Quintanilla Paredes]
+* Correo: [jgquinta@bancolombia.com.co , guillermo.quintanilla@pragma.com.co]
+* GitHub: [https://github.com/guillermoqp/]

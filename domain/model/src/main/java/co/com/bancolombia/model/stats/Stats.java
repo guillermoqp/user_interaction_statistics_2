@@ -18,4 +18,18 @@ public class Stats {
     private String hash;
     // Campo adicional para la clave primaria de DynamoDB (timestamp)
     private long timestamp;
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Stats{");
+        sb.append("totalContactoClientes=").append(totalContactoClientes);
+        sb.append(", motivoReclamo=").append(motivoReclamo);
+        sb.append(", motivoGarantia=").append(motivoGarantia);
+        sb.append(", motivoDuda=").append(motivoDuda);
+        sb.append(", motivoCompra=").append(motivoCompra);
+        sb.append(", motivoFelicitaciones=").append(motivoFelicitaciones);
+        sb.append(", motivoCambio=").append(motivoCambio);
+        sb.append('}');
+        return sb.toString();
+    }
 }

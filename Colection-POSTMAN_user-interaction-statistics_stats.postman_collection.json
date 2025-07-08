@@ -1,0 +1,41 @@
+{
+	"info": {
+		"_postman_id": "0fdf5482-8150-48e1-9b27-6f336995f660",
+		"name": "Colection-POSTMAN_user-interaction-statistics_stats",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5500627"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/api/v1/user-interaction-statistics/stats",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"totalContactoClientes\": 250,\r\n   \"motivoReclamo\": 25,\r\n   \"motivoGarantia\": 10,\r\n   \"motivoDuda\": 100,\r\n   \"motivoCompra\": 100,\r\n   \"motivoFelicitaciones\": 7,\r\n   \"motivoCambio\": 8,\r\n   \"hash\":\"02946f262f2eb0d8d5c8e76c50433ed8\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user-interaction-statistics/stats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user-interaction-statistics",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
