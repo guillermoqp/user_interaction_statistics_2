@@ -1,8 +1,9 @@
 package co.com.bancolombia.dynamodb;
 
-import co.com.bancolombia.model.stats.Stats;
 import co.com.bancolombia.dynamodb.repository.StatsDynamoRepository;
 import co.com.bancolombia.dynamodb.DynamoAdapter;
+import co.com.bancolombia.dynamodb.entity.StatsEntity;
+import co.com.bancolombia.model.stats.Stats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
@@ -32,10 +33,20 @@ class DynamoAdapterTest {
                 .motivoCambio(7)
                 .hash("abc123")
                 .build();
-        when(repository.save(stats)).thenReturn(Mono.just(stats));
+        StatsEntity statsEntity = StatsEntity.builder()
+                .totalContactoClientes(1)
+                .motivoReclamo(2)
+                .motivoGarantia(3)
+                .motivoDuda(4)
+                .motivoCompra(5)
+                .motivoFelicitaciones(6)
+                .motivoCambio(7)
+                .hash("abc123")
+                .build();
+        when(repository.save(statsEntity)).thenReturn(Mono.just(statsEntity));
         StepVerifier.create(adapter.saveStats(stats))
                 .expectNext(stats)
                 .verifyComplete();
-        verify(repository, times(1)).save(stats);
+        verify(repository, times(1)).save(statsEntity);
     }
 }
