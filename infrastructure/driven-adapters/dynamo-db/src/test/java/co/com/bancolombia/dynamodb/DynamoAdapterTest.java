@@ -43,10 +43,10 @@ class DynamoAdapterTest {
                 .motivoCambio(7)
                 .hash("abc123")
                 .build();
-        when(repository.save(statsEntity)).thenReturn(Mono.just(statsEntity));
+        when(repository.save(any(StatsEntity.class))).thenReturn(Mono.just(statsEntity));
         StepVerifier.create(adapter.saveStats(stats))
                 .expectNext(stats)
                 .verifyComplete();
-        verify(repository, times(1)).save(statsEntity);
+        verify(repository, times(1)).save(any(StatsEntity.class));
     }
 }

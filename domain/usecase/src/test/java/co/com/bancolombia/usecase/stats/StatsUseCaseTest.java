@@ -40,7 +40,7 @@ public class StatsUseCaseTest {
         when(statsRepository.saveStats(any())).thenReturn(Mono.empty());
         when(eventPublisher.publish(any())).thenReturn(Mono.empty());
 
-        //StepVerifier.create(statsUseCase.processStats(input)).expectNextMatches(result -> null!=result.getTimestamp()).verifyComplete();
+        StepVerifier.create(statsUseCase.processStats(input)).expectNextMatches(result -> result.getTimestamp() > 0).verifyComplete();
 
         verify(statsRepository, times(1)).saveStats(any());
         verify(eventPublisher, times(1)).publish(any());
