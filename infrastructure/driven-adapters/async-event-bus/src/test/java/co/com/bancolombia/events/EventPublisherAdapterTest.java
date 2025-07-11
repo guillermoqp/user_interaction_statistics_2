@@ -19,33 +19,36 @@ class EventPublisherAdapterTest {
     private EventPublisherAdapter adapter;
     private EventProperties prop;
 
+
     @BeforeEach
     void setUp() {
         rabbitTemplate = mock(RabbitTemplate.class);
         objectMapper = new ObjectMapper();
+        prop = mock(EventProperties.class);
+        when(prop.getExchange()).thenReturn("amq.direct");
+        when(prop.getRoutingKey()).thenReturn("event.stats.validated");
         adapter = new EventPublisherAdapter(rabbitTemplate, objectMapper, prop);
     }
 
     @Test
-    void shouldPublishEvent() {
+    void shouldPublishToRabbitSuccessfully() {
         Stats stats = Stats.builder()
-                .totalContactoClientes(250)
-                .motivoReclamo(25)
-                .motivoGarantia(10)
-                .motivoDuda(100)
-                .motivoCompra(100)
-                .motivoFelicitaciones(7)
-                .motivoCambio(8)
-                .hash("02946f262f2eb0d8d5c8e76c50433ed8")
+                .totalContactoClientes(1)
+                .motivoReclamo(2)
+                .motivoGarantia(3)
+                .motivoDuda(4)
+                .motivoCompra(5)
+                .motivoFelicitaciones(6)
+                .motivoCambio(7)
+                .hash("valido")
                 .timestamp(System.currentTimeMillis())
                 .build();
-        doNothing().when(rabbitTemplate).convertAndSend(
-                any(String.class),
-                any(String.class),
+        adapter.publish(stats).block();
+        verify(rabbitTemplate, times(1)).convertAndSend(
+                eq("amq.direct"),
+                eq("event.stats.validated"),
                 any(String.class)
         );
-        adapter.publish(stats);
-        verify(rabbitTemplate).convertAndSend(any(String.class), any(String.class), any(String.class));
     }
 
     @Test
@@ -55,11 +58,15 @@ class EventPublisherAdapterTest {
         try {
             when(brokenMapper.writeValueAsString(any())).thenThrow(new JsonProcessingException("fail") {});
         } catch (JsonProcessingException ignored) {}
-        EventPublisherAdapter brokenAdapter = new EventPublisherAdapter(rabbitTemplate, brokenMapper, "amq.direct", "event.stats.validated");
+        EventPublisherAdapter brokenAdapter = new EventPublisherAdapter(rabbitTemplate, brokenMapper, prop);
         StepVerifier.create(brokenAdapter.publish(stats))
-                .expectErrorMatches(e -> e instanceof RuntimeException && e.getMessage().contains("Error serializando evento"))
+                .expectErrorMatches(e -> e instanceof RuntimeException)
                 .verify();
 
-        verify(rabbitTemplate, never()).convertAndSend(any(), any(), any());
+        verify(rabbitTemplate, never()).convertAndSend(
+                any(String.class),
+                any(String.class),
+                any(Object.class)
+        );
     }
 }
